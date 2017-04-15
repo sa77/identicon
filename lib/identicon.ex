@@ -11,16 +11,14 @@ defmodule Identicon do
 
   @doc """
     return [r, g, b] values from image (Identicon.Image struct) passed into it
+    Add property tuple - `color: {r, g, b}` into struct Identicon.Image (generates new: remember Immutablity in Elixir)
   """
   def pick_color(image) do
     # use pattern matching to extract RGB values
-    %Identicon.Image{hex: hex_list} = image
-    # just interested in first 3 values, toss rest of the stuff into _tail
-    [r, g, b | _tail] = hex_list
-    # can be rewritten
-    # %Identicon.Image{hex: [r, g, b | _tail]} = image
+    %Identicon.Image{hex: [r, g, b | _tail]} = image
 
-    [r, g, b]
+    # take the existing image struct then add color property into it
+    %Identicon.Image{image | color: {r, g, b}}
   end
 
   @doc """
