@@ -7,6 +7,18 @@ defmodule Identicon do
     input_term
     |> hash_input
     |> pick_color
+    |> build_grid
+  end
+
+  @doc """
+
+  """
+  # Enum.chunk(3) - build sub-lists of 3 items
+  # mirror that 3 item list to mirror into 5 item list mirrored from middle item
+  def build_grid(%Identicon.Image{hex: hex} = image) do
+    hex
+    |> Enum.chunk(3)
+    # |> mirror_row
   end
 
   @doc """
