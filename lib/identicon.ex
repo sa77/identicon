@@ -8,19 +8,33 @@ defmodule Identicon do
     |> hash_input
     |> pick_color
     |> build_grid
+    |> filter_odd_squares
+  end
+
+  def filter_odd_squares(%Identicon.Image{grid: grid} = image) do
+    grid = Enum.filter grid, fn({code, _index}) ->
+      # calculates remainder
+      rem(code, 2) == 0
+    end
+
+    %Identicon.Image{image | grid: grid }
   end
 
   @doc """
-
+    generates grid (collection of tuples with 5x5 pixel indexed data)
+    fills up property `grid` in `%Identicon.Image` struct
   """
   # Enum.chunk(3) - build sub-lists of 3 items
   # mirror that 3 item list to mirror into 5 item list mirrored from middle item
   def build_grid(%Identicon.Image{hex: hex} = image) do
-    hex
-    |> Enum.chunk(3)
-    |> Enum.map(&mirror_row/1)
-    |> List.flatten
-    |> Enum.with_index
+    grid =
+      hex
+      |> Enum.chunk(3)
+      |> Enum.map(&mirror_row/1)
+      |> List.flatten
+      |> Enum.with_index
+
+    %Identicon.Image{image | grid: grid }
   end
 
   def mirror_row(row) do
