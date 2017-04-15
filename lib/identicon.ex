@@ -10,6 +10,31 @@ defmodule Identicon do
     |> build_grid
     |> filter_odd_squares
     |> build_pixel_map
+    |> draw_image
+    |> save_image(input_term)
+  end
+
+  @doc """
+    save image to hard disk
+  """
+  def save_image(egd_image, input_term) do
+    File.write("tmp/#{input_term}.png", egd_image)
+  end
+
+  @doc """
+    Draw image from color and pixed_map pulled from `%Identicon.Image` struct
+    Store Image to file system
+  """
+  def draw_image(%Identicon.Image{color: color, pixel_map: pixel_map}) do
+    # generate canvas of 250x250 px
+    image = :egd.create(250, 250)
+    fill = :egd.color(color)
+
+    Enum.each pixel_map, fn({start, stop}) ->
+      :egd.filledRectangle(image, start, stop, fill)
+    end
+
+    :egd.render(image)
   end
 
   @doc """
