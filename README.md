@@ -1,19 +1,34 @@
 # Identicon
 
-**TODO: Add description**
+elixir lib to generate 5x5 pixel grid image from MD5 of the passed string
 
-## Installation
+## Use
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `identicon` to your list of dependencies in `mix.exs`:
-
-```elixir
-def deps do
-  [{:identicon, "~> 0.1.0"}]
-end
+```bash
+git clone git@github.com:sa77/identicon.git
+cd identicon
+# get all dependencies
+mix deps.get
+# run elixir app in iex interactive mode
+iex -S mix
+Identicon.main('identicon')
+# generates tmp/identicon.png
+# exit from iex and open generated image
+open tmp/identicon.png
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/identicon](https://hexdocs.pm/identicon).
+## Test
+
+```bash
+cd identicon
+mix test
+```
+
+## Documentation
+
+```bash
+# generate documentation
+mix docs
+open doc/index.html
+```
 
